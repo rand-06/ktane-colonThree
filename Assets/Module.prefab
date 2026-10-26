@@ -1838,7 +1838,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1900953858989810}
-  m_Text: vinograd
+  m_Text: Sili
   m_OffsetZ: 0
   m_CharacterSize: 0.03
   m_LineSpacing: 1
@@ -1943,7 +1943,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1435471440580454}
-  m_Text: burmaldad
+  m_Text: Bip
   m_OffsetZ: 0
   m_CharacterSize: 0.03
   m_LineSpacing: 1

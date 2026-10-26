@@ -19,7 +19,7 @@ public class colonThreeModule : MonoBehaviour
 	private bool canInput;
 	private int currentPoints;
 	private int goalPoints;
-	private bool zeroTime;
+	bool ZenModeActive;
 	private bool ModuleSolved;
 	private bool TwitchPlaysActive;
 
@@ -38,21 +38,23 @@ public class colonThreeModule : MonoBehaviour
 	}
 	
 	void Start () {
-		zeroTime = BombInfo.GetTime() == 0f;
-		goalPoints = zeroTime?6000:(int)(BombInfo.GetTime()*10);
-		foreach (MeshRenderer ledRenderer in ledRenderers) ledRenderer.material.color =  Color.black;
-
-		goalPointsText.text = goalPoints.ToString();
-		activationsText.text = activationsCount.ToString();
-		timerText.text = timer.ToString();
-		currentPointsText.text = currentPoints.ToString();
 		
 		colonThreeButton.OnInteract += delegate { HandlePress(0); return false; };
 		colonBracketButton.OnInteract += delegate { HandlePress(1); return false; };
 		angyColonThreeButton.OnInteract += delegate { HandlePress(2); return false; };
 		angyColonBracketButton.OnInteract += delegate { HandlePress(3); return false; };
+		GetComponent<KMBombModule>().OnActivate += delegate
+		{
+			
+			goalPoints = ZenModeActive ? 6000 : (int)(BombInfo.GetTime() * 10);
+			foreach (MeshRenderer ledRenderer in ledRenderers) ledRenderer.material.color = Color.black;
 
-		StartCoroutine(TimerRoutine());
+			goalPointsText.text = goalPoints.ToString();
+			activationsText.text = activationsCount.ToString();
+			timerText.text = timer.ToString();
+			currentPointsText.text = currentPoints.ToString();
+			StartCoroutine(TimerRoutine());
+		};
 	}
 	
 	IEnumerator TimerRoutine()
@@ -62,7 +64,7 @@ public class colonThreeModule : MonoBehaviour
 		while (!ModuleSolved)
 		{
 			float currentBombTime = BombInfo.GetTime();
-			if (lastBombTime - currentBombTime >= 0.1f)
+			if (Mathf.Abs(lastBombTime - currentBombTime) >= 0.1f)
 			{
 				lastBombTime = currentBombTime;
 				timer--;
@@ -128,7 +130,7 @@ public class colonThreeModule : MonoBehaviour
 
 	void Update()
 	{
-		if (ModuleSolved || (BombInfo.GetTime() == 0 && !zeroTime) || zeroTime) return;
+		if (ModuleSolved || (BombInfo.GetTime() == 0 && !ZenModeActive) || ZenModeActive) return;
 		goalPoints = (int)(BombInfo.GetTime() * 10);
 		goalPointsText.text = goalPoints.ToString();
 	}
